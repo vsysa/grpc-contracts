@@ -1,0 +1,214 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "daemon/efficiencyCalculator/service/v1/ptm.proto",
+    "version": "version not set"
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1/counter/total": {
+      "get": {
+        "operationId": "Ptm_GetTotalByCounter",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1TotalEfficiencyResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "from",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "group_by",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "GROUP_BY_PRODUCT",
+                "GROUP_BY_PRODLINE",
+                "GROUP_BY_LINESET",
+                "GROUP_BY_FURNACE"
+              ]
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "is_weight",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "tags": [
+          "Ptm"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "type_url": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1DataItem": {
+      "type": "object",
+      "properties": {
+        "pack": {
+          "type": "number",
+          "format": "float"
+        },
+        "melt": {
+          "type": "number",
+          "format": "float"
+        },
+        "ptm": {
+          "type": "number",
+          "format": "float"
+        },
+        "prodline_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "lineset_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "furnace_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "complex_id": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "v1GroupByType": {
+      "type": "string",
+      "enum": [
+        "GROUP_BY_PRODUCT",
+        "GROUP_BY_PRODLINE",
+        "GROUP_BY_LINESET",
+        "GROUP_BY_FURNACE"
+      ],
+      "default": "GROUP_BY_PRODUCT"
+    },
+    "v1Total": {
+      "type": "object",
+      "properties": {
+        "pack": {
+          "type": "number",
+          "format": "float"
+        },
+        "melt": {
+          "type": "number",
+          "format": "float"
+        },
+        "ptm": {
+          "type": "number",
+          "format": "float"
+        }
+      }
+    },
+    "v1TotalEfficiencyResponse": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "$ref": "#/definitions/v1Total"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1DataItem"
+          }
+        }
+      }
+    },
+    "v1WhereCondition": {
+      "type": "object",
+      "properties": {
+        "lineset_id": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "product_id": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "prodline_id": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "furnace_id": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      }
+    }
+  }
+}

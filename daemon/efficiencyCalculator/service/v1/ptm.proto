@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package api.service.v1.ptm;
+option go_package = "github.com/vsysa/grpc-contracts/gen/go/daemon/efficiencyCalculator/service/v1/grpcPtmService";
+
+//git clone https://fuchsia.googlesource.com/third_party/googleapis --depth 1
+import "google/api/annotations.proto";
+//import "google/api/http.proto";
+import "daemon/efficiencyCalculator/model/v1/ptm.proto";
+
+
+service Ptm {
+  rpc GetTotalByCounter (api.model.v1.TotalEfficiencyRequest) returns (api.model.v1.TotalEfficiencyResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/counter/total"
+    };
+  }
+}

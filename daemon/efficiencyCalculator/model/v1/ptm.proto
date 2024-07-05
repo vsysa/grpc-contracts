@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package api.model.v1;
+option go_package = "github.com/vsysa/grpc-contracts/gen/go/daemon/efficiencyCalculator/model/v1/grpcPtmModel";
+
+import "google/protobuf/timestamp.proto";
+import "daemon/efficiencyCalculator/model/v1/whereCondition.proto";
+
+message TotalEfficiencyRequest {
+  google.protobuf.Timestamp from = 1;
+  google.protobuf.Timestamp to = 2;
+  repeated WhereCondition where = 3;
+  repeated GroupByType group_by = 4;
+  bool is_weight = 5;
+}
+enum GroupByType {
+  GROUP_BY_PRODUCT = 0;
+  GROUP_BY_PRODLINE = 1;
+  GROUP_BY_LINESET = 2;
+  GROUP_BY_FURNACE = 3;
+}
+
+
+
+message TotalEfficiencyResponse {
+  Total total = 1;
+  repeated DataItem data = 2;
+}
+message Total {
+  float pack = 1;
+  float melt = 2;
+  float ptm = 3;
+}
+message DataItem {
+  float pack = 1;
+  float melt = 2;
+  float ptm = 3;
+  int32 prodline_id = 4 [json_name = "prodline_id"];
+  int32 lineset_id = 5 [json_name = "lineset_id"];
+  int32 furnace_id = 6 [json_name = "furnace_id"];
+  int32 complex_id = 7 [json_name = "complex_id"];
+}
