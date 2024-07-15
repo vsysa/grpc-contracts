@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package common.model.v1;
+option go_package = "github.com/vsysa/grpc-contracts/gen/go/daemon/common/model/v1/grpcFilterCondition";
+
+message WhereCondition {
+  repeated int32 lineset_id = 1 [json_name = "lineset_id"];
+  repeated int32 product_id = 2 [json_name = "product_id"];
+  repeated int32 prodline_id = 3 [json_name = "prodline_id"];
+  repeated int32 furnace_id = 4 [json_name = "furnace_id"];
+}
+
+enum StartOfDayType {
+  START_OF_DAY = 0;
+  START_OF_SHIFT = 1;
+}
+
+enum DetalizationType {
+	DETALIZATION_MINUTE = 0;
+	DETALIZATION_HOUR = 1;
+	DETALIZATION_SHIFT = 2;
+	DETALIZATION_DAY = 3;
+	DETALIZATION_WEEK = 4;
+	DETALIZATION_MONTH = 5;
+	DETALIZATION_YEAR = 6;
+}

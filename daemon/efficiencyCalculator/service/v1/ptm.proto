@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package api.service.v1.ptm;
+package efficiencyCalculator.service.v1.ptm;
 option go_package = "github.com/vsysa/grpc-contracts/gen/go/daemon/efficiencyCalculator/service/v1/grpcPtmService";
 
 //git clone https://fuchsia.googlesource.com/third_party/googleapis --depth 1
@@ -10,9 +10,40 @@ import "daemon/efficiencyCalculator/model/v1/ptm.proto";
 
 
 service Ptm {
-  rpc GetTotalByCounter (api.model.v1.TotalEfficiencyRequest) returns (api.model.v1.TotalEfficiencyResponse) {
+  rpc GetTotalByCounter (efficiencyCalculator.model.v1.TotalEfficiencyRequest) returns (efficiencyCalculator.model.v1.TotalEfficiencyResponse) {
     option (google.api.http) = {
-      get: "/api/v1/counter/total"
+      post: "/api/v1/counter/total"
+      body: "*"
+    };
+  }
+  rpc GetHistoryByCounter (efficiencyCalculator.model.v1.HistoryEfficiencyRequest) returns (efficiencyCalculator.model.v1.HistoryEfficiencyResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/counter/history"
+      body: "*"
+    };
+  }
+  rpc GetTotalByPacked (efficiencyCalculator.model.v1.TotalEfficiencyRequest) returns (efficiencyCalculator.model.v1.TotalEfficiencyResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/packed/total"
+      body: "*"
+    };
+  }
+  rpc GetHistoryByPacked (efficiencyCalculator.model.v1.HistoryEfficiencyRequest) returns (efficiencyCalculator.model.v1.HistoryEfficiencyResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/packed/history"
+      body: "*"
+    };
+  }
+  rpc GetTotalBySaleable (efficiencyCalculator.model.v1.TotalEfficiencyRequest) returns (efficiencyCalculator.model.v1.TotalEfficiencyResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/saleable/total"
+      body: "*"
+    };
+  }
+  rpc GetHistoryBySaleable (efficiencyCalculator.model.v1.HistoryEfficiencyRequest) returns (efficiencyCalculator.model.v1.HistoryEfficiencyResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/saleable/history"
+      body: "*"
     };
   }
 }

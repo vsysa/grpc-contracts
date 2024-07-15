@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "daemon/efficiencyCalculator/model/v1/whereCondition.proto",
+    "title": "daemon/common/model/v1/filterConditions.proto",
     "version": "version not set"
   },
   "consumes": [

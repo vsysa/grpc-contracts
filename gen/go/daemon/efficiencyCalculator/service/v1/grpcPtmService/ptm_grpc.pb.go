@@ -24,6 +24,11 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PtmClient interface {
 	GetTotalByCounter(ctx context.Context, in *grpcPtmModel.TotalEfficiencyRequest, opts ...grpc.CallOption) (*grpcPtmModel.TotalEfficiencyResponse, error)
+	GetHistoryByCounter(ctx context.Context, in *grpcPtmModel.HistoryEfficiencyRequest, opts ...grpc.CallOption) (*grpcPtmModel.HistoryEfficiencyResponse, error)
+	GetTotalByPacked(ctx context.Context, in *grpcPtmModel.TotalEfficiencyRequest, opts ...grpc.CallOption) (*grpcPtmModel.TotalEfficiencyResponse, error)
+	GetHistoryByPacked(ctx context.Context, in *grpcPtmModel.HistoryEfficiencyRequest, opts ...grpc.CallOption) (*grpcPtmModel.HistoryEfficiencyResponse, error)
+	GetTotalBySaleable(ctx context.Context, in *grpcPtmModel.TotalEfficiencyRequest, opts ...grpc.CallOption) (*grpcPtmModel.TotalEfficiencyResponse, error)
+	GetHistoryBySaleable(ctx context.Context, in *grpcPtmModel.HistoryEfficiencyRequest, opts ...grpc.CallOption) (*grpcPtmModel.HistoryEfficiencyResponse, error)
 }
 
 type ptmClient struct {
@@ -36,7 +41,52 @@ func NewPtmClient(cc grpc.ClientConnInterface) PtmClient {
 
 func (c *ptmClient) GetTotalByCounter(ctx context.Context, in *grpcPtmModel.TotalEfficiencyRequest, opts ...grpc.CallOption) (*grpcPtmModel.TotalEfficiencyResponse, error) {
 	out := new(grpcPtmModel.TotalEfficiencyResponse)
-	err := c.cc.Invoke(ctx, "/api.service.v1.ptm.Ptm/GetTotalByCounter", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/efficiencyCalculator.service.v1.ptm.Ptm/GetTotalByCounter", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ptmClient) GetHistoryByCounter(ctx context.Context, in *grpcPtmModel.HistoryEfficiencyRequest, opts ...grpc.CallOption) (*grpcPtmModel.HistoryEfficiencyResponse, error) {
+	out := new(grpcPtmModel.HistoryEfficiencyResponse)
+	err := c.cc.Invoke(ctx, "/efficiencyCalculator.service.v1.ptm.Ptm/GetHistoryByCounter", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ptmClient) GetTotalByPacked(ctx context.Context, in *grpcPtmModel.TotalEfficiencyRequest, opts ...grpc.CallOption) (*grpcPtmModel.TotalEfficiencyResponse, error) {
+	out := new(grpcPtmModel.TotalEfficiencyResponse)
+	err := c.cc.Invoke(ctx, "/efficiencyCalculator.service.v1.ptm.Ptm/GetTotalByPacked", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ptmClient) GetHistoryByPacked(ctx context.Context, in *grpcPtmModel.HistoryEfficiencyRequest, opts ...grpc.CallOption) (*grpcPtmModel.HistoryEfficiencyResponse, error) {
+	out := new(grpcPtmModel.HistoryEfficiencyResponse)
+	err := c.cc.Invoke(ctx, "/efficiencyCalculator.service.v1.ptm.Ptm/GetHistoryByPacked", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ptmClient) GetTotalBySaleable(ctx context.Context, in *grpcPtmModel.TotalEfficiencyRequest, opts ...grpc.CallOption) (*grpcPtmModel.TotalEfficiencyResponse, error) {
+	out := new(grpcPtmModel.TotalEfficiencyResponse)
+	err := c.cc.Invoke(ctx, "/efficiencyCalculator.service.v1.ptm.Ptm/GetTotalBySaleable", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ptmClient) GetHistoryBySaleable(ctx context.Context, in *grpcPtmModel.HistoryEfficiencyRequest, opts ...grpc.CallOption) (*grpcPtmModel.HistoryEfficiencyResponse, error) {
+	out := new(grpcPtmModel.HistoryEfficiencyResponse)
+	err := c.cc.Invoke(ctx, "/efficiencyCalculator.service.v1.ptm.Ptm/GetHistoryBySaleable", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -48,6 +98,11 @@ func (c *ptmClient) GetTotalByCounter(ctx context.Context, in *grpcPtmModel.Tota
 // for forward compatibility
 type PtmServer interface {
 	GetTotalByCounter(context.Context, *grpcPtmModel.TotalEfficiencyRequest) (*grpcPtmModel.TotalEfficiencyResponse, error)
+	GetHistoryByCounter(context.Context, *grpcPtmModel.HistoryEfficiencyRequest) (*grpcPtmModel.HistoryEfficiencyResponse, error)
+	GetTotalByPacked(context.Context, *grpcPtmModel.TotalEfficiencyRequest) (*grpcPtmModel.TotalEfficiencyResponse, error)
+	GetHistoryByPacked(context.Context, *grpcPtmModel.HistoryEfficiencyRequest) (*grpcPtmModel.HistoryEfficiencyResponse, error)
+	GetTotalBySaleable(context.Context, *grpcPtmModel.TotalEfficiencyRequest) (*grpcPtmModel.TotalEfficiencyResponse, error)
+	GetHistoryBySaleable(context.Context, *grpcPtmModel.HistoryEfficiencyRequest) (*grpcPtmModel.HistoryEfficiencyResponse, error)
 }
 
 // UnimplementedPtmServer should be embedded to have forward compatible implementations.
@@ -56,6 +111,21 @@ type UnimplementedPtmServer struct {
 
 func (UnimplementedPtmServer) GetTotalByCounter(context.Context, *grpcPtmModel.TotalEfficiencyRequest) (*grpcPtmModel.TotalEfficiencyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTotalByCounter not implemented")
+}
+func (UnimplementedPtmServer) GetHistoryByCounter(context.Context, *grpcPtmModel.HistoryEfficiencyRequest) (*grpcPtmModel.HistoryEfficiencyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetHistoryByCounter not implemented")
+}
+func (UnimplementedPtmServer) GetTotalByPacked(context.Context, *grpcPtmModel.TotalEfficiencyRequest) (*grpcPtmModel.TotalEfficiencyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTotalByPacked not implemented")
+}
+func (UnimplementedPtmServer) GetHistoryByPacked(context.Context, *grpcPtmModel.HistoryEfficiencyRequest) (*grpcPtmModel.HistoryEfficiencyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetHistoryByPacked not implemented")
+}
+func (UnimplementedPtmServer) GetTotalBySaleable(context.Context, *grpcPtmModel.TotalEfficiencyRequest) (*grpcPtmModel.TotalEfficiencyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTotalBySaleable not implemented")
+}
+func (UnimplementedPtmServer) GetHistoryBySaleable(context.Context, *grpcPtmModel.HistoryEfficiencyRequest) (*grpcPtmModel.HistoryEfficiencyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetHistoryBySaleable not implemented")
 }
 
 // UnsafePtmServer may be embedded to opt out of forward compatibility for this service.
@@ -79,10 +149,100 @@ func _Ptm_GetTotalByCounter_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.service.v1.ptm.Ptm/GetTotalByCounter",
+		FullMethod: "/efficiencyCalculator.service.v1.ptm.Ptm/GetTotalByCounter",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PtmServer).GetTotalByCounter(ctx, req.(*grpcPtmModel.TotalEfficiencyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Ptm_GetHistoryByCounter_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(grpcPtmModel.HistoryEfficiencyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PtmServer).GetHistoryByCounter(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/efficiencyCalculator.service.v1.ptm.Ptm/GetHistoryByCounter",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PtmServer).GetHistoryByCounter(ctx, req.(*grpcPtmModel.HistoryEfficiencyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Ptm_GetTotalByPacked_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(grpcPtmModel.TotalEfficiencyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PtmServer).GetTotalByPacked(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/efficiencyCalculator.service.v1.ptm.Ptm/GetTotalByPacked",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PtmServer).GetTotalByPacked(ctx, req.(*grpcPtmModel.TotalEfficiencyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Ptm_GetHistoryByPacked_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(grpcPtmModel.HistoryEfficiencyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PtmServer).GetHistoryByPacked(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/efficiencyCalculator.service.v1.ptm.Ptm/GetHistoryByPacked",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PtmServer).GetHistoryByPacked(ctx, req.(*grpcPtmModel.HistoryEfficiencyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Ptm_GetTotalBySaleable_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(grpcPtmModel.TotalEfficiencyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PtmServer).GetTotalBySaleable(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/efficiencyCalculator.service.v1.ptm.Ptm/GetTotalBySaleable",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PtmServer).GetTotalBySaleable(ctx, req.(*grpcPtmModel.TotalEfficiencyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Ptm_GetHistoryBySaleable_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(grpcPtmModel.HistoryEfficiencyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PtmServer).GetHistoryBySaleable(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/efficiencyCalculator.service.v1.ptm.Ptm/GetHistoryBySaleable",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PtmServer).GetHistoryBySaleable(ctx, req.(*grpcPtmModel.HistoryEfficiencyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -91,12 +251,32 @@ func _Ptm_GetTotalByCounter_Handler(srv interface{}, ctx context.Context, dec fu
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Ptm_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "api.service.v1.ptm.Ptm",
+	ServiceName: "efficiencyCalculator.service.v1.ptm.Ptm",
 	HandlerType: (*PtmServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "GetTotalByCounter",
 			Handler:    _Ptm_GetTotalByCounter_Handler,
+		},
+		{
+			MethodName: "GetHistoryByCounter",
+			Handler:    _Ptm_GetHistoryByCounter_Handler,
+		},
+		{
+			MethodName: "GetTotalByPacked",
+			Handler:    _Ptm_GetTotalByPacked_Handler,
+		},
+		{
+			MethodName: "GetHistoryByPacked",
+			Handler:    _Ptm_GetHistoryByPacked_Handler,
+		},
+		{
+			MethodName: "GetTotalBySaleable",
+			Handler:    _Ptm_GetTotalBySaleable_Handler,
+		},
+		{
+			MethodName: "GetHistoryBySaleable",
+			Handler:    _Ptm_GetHistoryBySaleable_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

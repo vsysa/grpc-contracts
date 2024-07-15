@@ -1,42 +1,76 @@
 syntax = "proto3";
 
-package api.model.v1;
+package efficiencyCalculator.model.v1;
 option go_package = "github.com/vsysa/grpc-contracts/gen/go/daemon/efficiencyCalculator/model/v1/grpcPtmModel";
 
 import "google/protobuf/timestamp.proto";
-import "daemon/efficiencyCalculator/model/v1/whereCondition.proto";
+import "google/protobuf/wrappers.proto";
+import "daemon/common/model/v1/filterConditions.proto";
 
-message TotalEfficiencyRequest {
-  google.protobuf.Timestamp from = 1;
-  google.protobuf.Timestamp to = 2;
-  repeated WhereCondition where = 3;
-  repeated GroupByType group_by = 4;
-  bool is_weight = 5;
-}
+
 enum GroupByType {
   GROUP_BY_PRODUCT = 0;
   GROUP_BY_PRODLINE = 1;
   GROUP_BY_LINESET = 2;
   GROUP_BY_FURNACE = 3;
 }
+// тип начала периода детализации дня - он может начинаться с начала суток или с начала смены
 
 
+message Total {
+  double pack = 1;
+  double melt = 2;
+  google.protobuf.DoubleValue ptm = 3;
+}
+
+message DataItem {
+  double pack = 1;
+  double melt = 2;
+  google.protobuf.DoubleValue ptm = 3;
+  optional int32 prodline_id = 4 [json_name = "prodline_id"];
+  optional int32 lineset_id = 5 [json_name = "lineset_id"];
+  optional int32 furnace_id = 6 [json_name = "furnace_id"];
+  optional int32 complex_id = 7 [json_name = "complex_id"];
+}
+
+message HistoryItem {
+  google.protobuf.Timestamp time = 1;
+  double pack = 2;
+  double melt = 3;
+  google.protobuf.DoubleValue ptm = 4;
+  optional int32 prodline_id = 5 [json_name = "prodline_id"];
+  optional int32 lineset_id = 6 [json_name = "lineset_id"];
+  optional int32 furnace_id = 7 [json_name = "furnace_id"];
+  optional int32 complex_id = 8 [json_name = "complex_id"];
+}
+
+
+
+message TotalEfficiencyRequest {
+  google.protobuf.Timestamp from = 1;
+  google.protobuf.Timestamp to = 2;
+  repeated common.model.v1.WhereCondition where = 3;
+  repeated GroupByType groupBy = 4;
+}
 
 message TotalEfficiencyResponse {
   Total total = 1;
   repeated DataItem data = 2;
 }
-message Total {
-  float pack = 1;
-  float melt = 2;
-  float ptm = 3;
+
+
+message HistoryEfficiencyRequest {
+  google.protobuf.Timestamp from = 1;
+  google.protobuf.Timestamp to = 2;
+  repeated common.model.v1.WhereCondition where = 3;
+  repeated GroupByType groupBy = 4;
+  common.model.v1.StartOfDayType startOfDay = 5;
+  common.model.v1.DetalizationType Detalization = 6;
+  bool IsFillEmptyPeriods = 7;
 }
-message DataItem {
-  float pack = 1;
-  float melt = 2;
-  float ptm = 3;
-  int32 prodline_id = 4 [json_name = "prodline_id"];
-  int32 lineset_id = 5 [json_name = "lineset_id"];
-  int32 furnace_id = 6 [json_name = "furnace_id"];
-  int32 complex_id = 7 [json_name = "complex_id"];
+
+message HistoryEfficiencyResponse {
+  Total total = 1;
+  repeated DataItem data = 2;
+  repeated HistoryItem history = 3;
 }

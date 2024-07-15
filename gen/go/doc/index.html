@@ -175,13 +175,21 @@
         
           
           <li>
-            <a href="#daemon%2fefficiencyCalculator%2fmodel%2fv1%2fwhereCondition.proto">daemon/efficiencyCalculator/model/v1/whereCondition.proto</a>
+            <a href="#daemon%2fcommon%2fmodel%2fv1%2ffilterConditions.proto">daemon/common/model/v1/filterConditions.proto</a>
             <ul>
               
                 <li>
-                  <a href="#api.model.v1.WhereCondition"><span class="badge">M</span>WhereCondition</a>
+                  <a href="#common.model.v1.WhereCondition"><span class="badge">M</span>WhereCondition</a>
                 </li>
               
+              
+                <li>
+                  <a href="#common.model.v1.DetalizationType"><span class="badge">E</span>DetalizationType</a>
+                </li>
+              
+                <li>
+                  <a href="#common.model.v1.StartOfDayType"><span class="badge">E</span>StartOfDayType</a>
+                </li>
               
               
               
@@ -195,12 +203,12 @@
     
       
       <div class="file-heading">
-        <h2 id="daemon/efficiencyCalculator/model/v1/whereCondition.proto">daemon/efficiencyCalculator/model/v1/whereCondition.proto</h2><a href="#title">Top</a>
+        <h2 id="daemon/common/model/v1/filterConditions.proto">daemon/common/model/v1/filterConditions.proto</h2><a href="#title">Top</a>
       </div>
       <p></p>
 
       
-        <h3 id="api.model.v1.WhereCondition">WhereCondition</h3>
+        <h3 id="common.model.v1.WhereCondition">WhereCondition</h3>
         <p></p>
 
         
@@ -246,6 +254,82 @@
         
       
 
+      
+        <h3 id="common.model.v1.DetalizationType">DetalizationType</h3>
+        <p></p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>DETALIZATION_MINUTE</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>DETALIZATION_HOUR</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>DETALIZATION_SHIFT</td>
+                <td>2</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>DETALIZATION_DAY</td>
+                <td>3</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>DETALIZATION_WEEK</td>
+                <td>4</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>DETALIZATION_MONTH</td>
+                <td>5</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>DETALIZATION_YEAR</td>
+                <td>6</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+        <h3 id="common.model.v1.StartOfDayType">StartOfDayType</h3>
+        <p></p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>START_OF_DAY</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>START_OF_SHIFT</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
       
 
       

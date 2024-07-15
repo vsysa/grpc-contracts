@@ -11,8 +11,40 @@
     "application/json"
   ],
   "paths": {
+    "/api/v1/counter/history": {
+      "post": {
+        "operationId": "Ptm_GetHistoryByCounter",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1HistoryEfficiencyResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1HistoryEfficiencyRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Ptm"
+        ]
+      }
+    },
     "/api/v1/counter/total": {
-      "get": {
+      "post": {
         "operationId": "Ptm_GetTotalByCounter",
         "responses": {
           "200": {
@@ -30,40 +62,140 @@
         },
         "parameters": [
           {
-            "name": "from",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "format": "date-time"
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1TotalEfficiencyRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Ptm"
+        ]
+      }
+    },
+    "/api/v1/packed/history": {
+      "post": {
+        "operationId": "Ptm_GetHistoryByPacked",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1HistoryEfficiencyResponse"
+            }
           },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
           {
-            "name": "to",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "format": "date-time"
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1HistoryEfficiencyRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Ptm"
+        ]
+      }
+    },
+    "/api/v1/packed/total": {
+      "post": {
+        "operationId": "Ptm_GetTotalByPacked",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1TotalEfficiencyResponse"
+            }
           },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
           {
-            "name": "group_by",
-            "in": "query",
-            "required": false,
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "GROUP_BY_PRODUCT",
-                "GROUP_BY_PRODLINE",
-                "GROUP_BY_LINESET",
-                "GROUP_BY_FURNACE"
-              ]
-            },
-            "collectionFormat": "multi"
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1TotalEfficiencyRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Ptm"
+        ]
+      }
+    },
+    "/api/v1/saleable/history": {
+      "post": {
+        "operationId": "Ptm_GetHistoryBySaleable",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1HistoryEfficiencyResponse"
+            }
           },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
           {
-            "name": "is_weight",
-            "in": "query",
-            "required": false,
-            "type": "boolean"
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1HistoryEfficiencyRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Ptm"
+        ]
+      }
+    },
+    "/api/v1/saleable/total": {
+      "post": {
+        "operationId": "Ptm_GetTotalBySaleable",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1TotalEfficiencyResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1TotalEfficiencyRequest"
+            }
           }
         ],
         "tags": [
@@ -108,15 +240,15 @@
       "properties": {
         "pack": {
           "type": "number",
-          "format": "float"
+          "format": "double"
         },
         "melt": {
           "type": "number",
-          "format": "float"
+          "format": "double"
         },
         "ptm": {
           "type": "number",
-          "format": "float"
+          "format": "double"
         },
         "prodline_id": {
           "type": "integer",
@@ -136,6 +268,19 @@
         }
       }
     },
+    "v1DetalizationType": {
+      "type": "string",
+      "enum": [
+        "DETALIZATION_MINUTE",
+        "DETALIZATION_HOUR",
+        "DETALIZATION_SHIFT",
+        "DETALIZATION_DAY",
+        "DETALIZATION_WEEK",
+        "DETALIZATION_MONTH",
+        "DETALIZATION_YEAR"
+      ],
+      "default": "DETALIZATION_MINUTE"
+    },
     "v1GroupByType": {
       "type": "string",
       "enum": [
@@ -146,20 +291,144 @@
       ],
       "default": "GROUP_BY_PRODUCT"
     },
+    "v1HistoryEfficiencyRequest": {
+      "type": "object",
+      "properties": {
+        "from": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "to": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "where": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1WhereCondition"
+          }
+        },
+        "groupBy": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1GroupByType"
+          }
+        },
+        "startOfDay": {
+          "$ref": "#/definitions/v1StartOfDayType"
+        },
+        "Detalization": {
+          "$ref": "#/definitions/v1DetalizationType"
+        },
+        "IsFillEmptyPeriods": {
+          "type": "boolean"
+        }
+      }
+    },
+    "v1HistoryEfficiencyResponse": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "$ref": "#/definitions/v1Total"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1DataItem"
+          }
+        },
+        "history": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1HistoryItem"
+          }
+        }
+      }
+    },
+    "v1HistoryItem": {
+      "type": "object",
+      "properties": {
+        "time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "pack": {
+          "type": "number",
+          "format": "double"
+        },
+        "melt": {
+          "type": "number",
+          "format": "double"
+        },
+        "ptm": {
+          "type": "number",
+          "format": "double"
+        },
+        "prodline_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "lineset_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "furnace_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "complex_id": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "v1StartOfDayType": {
+      "type": "string",
+      "enum": [
+        "START_OF_DAY",
+        "START_OF_SHIFT"
+      ],
+      "default": "START_OF_DAY"
+    },
     "v1Total": {
       "type": "object",
       "properties": {
         "pack": {
           "type": "number",
-          "format": "float"
+          "format": "double"
         },
         "melt": {
           "type": "number",
-          "format": "float"
+          "format": "double"
         },
         "ptm": {
           "type": "number",
-          "format": "float"
+          "format": "double"
+        }
+      }
+    },
+    "v1TotalEfficiencyRequest": {
+      "type": "object",
+      "properties": {
+        "from": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "to": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "where": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1WhereCondition"
+          }
+        },
+        "groupBy": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1GroupByType"
+          }
         }
       }
     },
