@@ -14,6 +14,8 @@ sudo chown -R $USER:$USER ./gen
 
 cp -r ./gen/go/github.com/vsysa/grpc-contracts/gen/* ./gen
 rm -rf ./gen/go/github.com
+find ./gen/ts -type f -name "*.ts" -exec sed -i 's/import \* as Long from "long";/import Long from "long";/' {} +
+
 
 # --go-module-prefix efficiencyCalculator/src
 # --go-module-prefix github.com/vsysa/grpc-contracts/gen/go 
